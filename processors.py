@@ -1,18 +1,19 @@
 import numpy as np
 from scipy.interpolate import interp1d
 from scipy.ndimage import gaussian_filter
+import pandas as pd
 
 class TimeSeriesProcessor:
     """Handles temporal aggregation, smoothing, and feature extraction."""
     
-    def __init__(self, df):
+    def __init__(self, df: pd.DataFrame):
         self.df = df.copy()
         self.df.set_index('date', inplace=True)
 
     def aggregate(self, frequency='W'):
         """
         Aggregates data by time. 
-        'W' = Weekly, '2W' = Fortnightly, 'M' = Monthly, 'Y' = Yearly.
+        frequency: 'D' = Daily, 'W' = Weekly, '2W' = Fortnightly, 'M' = Monthly, 'Y' = Yearly or any number of days (e.g., '10D' for 10-day periods)
         """
         # Resample and take the mean, then drop empty periods
         self.df = self.df.resample(frequency).mean().dropna()
