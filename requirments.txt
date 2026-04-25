@@ -1,0 +1,11 @@
+rasterio
+pandas
+geopandas
+earthengine-api
+geemap
+numpy
+matplotlib
+plotly
+scipy
+ipykernel
+nbformat

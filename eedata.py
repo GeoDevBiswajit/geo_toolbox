@@ -36,10 +36,13 @@ class GEETimeSeriesExtractor:
         # Load any custom user indices
         if custom_formulas:
             formulas_to_run.update(custom_formulas)
-
         def process_image(image):
-            # Apply scaling
-            scaled = image.divide(10000).copyProperties(image, ["system:time_start"])
+            # Scale ONLY the reflectance bands (starting with 'B'), leaving SCL intact
+            optical_bands = image.select('B.*').divide(10000)
+            
+            # Overwrite the unscaled optical bands with the scaled ones
+            scaled = image.addBands(optical_bands, overwrite=True)
+            
             if apply_mask:
                 scaled = self._apply_cloud_mask(scaled)
             
@@ -60,7 +63,7 @@ class GEETimeSeriesExtractor:
                 maxPixels=1e8
             )
             
-            # Construct return feature dynamically
+            # Construct return feature dynamically using the original 'image' for the date
             properties = {'date': image.date().format('YYYY-MM-dd')}
             for name in formulas_to_run.keys():
                 properties[name] = mean_dict.get(name)
