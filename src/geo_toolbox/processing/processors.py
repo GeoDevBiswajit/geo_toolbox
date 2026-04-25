@@ -18,6 +18,7 @@ class TimeSeriesProcessor:
         # Resample and take the mean, then drop empty periods
         self.df = self.df.resample(frequency).mean().dropna()
         return self
+    
     def smooth_series(self, column, sigma=10, suffix='_smoothed'):
         """
         Upsamples the dataframe to daily, interpolates gaps, 
@@ -43,18 +44,3 @@ class TimeSeriesProcessor:
         
         # 4. Return self to allow method chaining
         return self
-    # def smooth_series(self, column, sigma=10):
-    #     """Applies Gaussian smoothing to a specific column."""
-    #     dates = self.df.index
-    #     values = self.df[column].values
-        
-    #     # Calculate age in days for interpolation
-    #     age = np.array([(d - dates[0]).days for d in dates])
-    #     age_interp = np.arange(age.min(), age.max() + 1)
-        
-    #     interp_func = interp1d(age, values, kind='linear', fill_value="extrapolate")
-    #     smoothed_values = gaussian_filter(interp_func(age_interp), sigma=sigma)
-        
-    #     smoothed_dates = np.array([dates[0] + pd.Timedelta(days=int(i)) for i in age_interp])
-        
-    #     return smoothed_dates, smoothed_values

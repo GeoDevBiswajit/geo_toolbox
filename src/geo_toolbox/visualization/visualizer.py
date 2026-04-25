@@ -12,7 +12,8 @@ class TimeSeriesPlotter:
         # Reset index if date is the index, so we can plot it easily
         if self.df.index.name == 'date':
             self.df = self.df.reset_index()
-    def plot_static(self, columns_to_plot, title="Time Series Analysis", style_dict=None,save_file_path:str=None, **ax_kwargs):
+    
+    def plot_static(self, columns_to_plot, title="Time Series Analysis", style_dict=None, save_file_path: str = None, **ax_kwargs):
         """
         Matplotlib static plot with dynamic keyword arguments.
         
@@ -60,32 +61,6 @@ class TimeSeriesPlotter:
             plt.savefig(save_file_path, dpi=300)
         plt.show()
 
-    # def plot_static(self, columns_to_plot: str, title: str ="Time Series Analysis", save_file_path:str=None):
-    #     """Matplotlib static plot.
-    #     columns_to_plot: List of column names to plot (e.g., ['NDVI', 'NDTI']),
-    #     title: Title of the plot,
-    #     save_file_path: Optional path to save the figure (e.g., 'outputs/farm_402_timeseries.png')  
-    #     """
-    #     plt.style.use('ggplot')
-    #     fig, ax = plt.subplots(figsize=(12, 6))
-        
-    #     for col in columns_to_plot:
-    #         if col in self.df.columns:
-    #             ax.plot(self.df['date'], self.df[col], marker='o', label=col)
-                
-    #     ax.set_title(title, fontweight='bold')
-    #     ax.set_xlabel("Date", fontweight='bold')
-    #     ax.set_ylabel("Index Value", fontweight='bold')
-    #     ax.xaxis.set_major_locator(mdates.MonthLocator(interval=1))
-    #     plt.xticks(rotation=45, ha='right')
-    #     ax.legend()
-    #     fig.tight_layout()
-    #     if save_file_path:
-    #         os.makedirs(os.path.dirname(save_file_path), exist_ok=True)
-    #         if os.path.exists(save_file_path):
-    #             print(f"Warning: {save_file_path} already exists and will be overwritten.")
-    #         plt.savefig(save_file_path, dpi=300)
-    #     plt.show()
     def plot_interactive(self, columns_to_plot, title="Time Series Analysis", style_dict=None, **layout_kwargs):
         """
         Plotly interactive plot with dynamic keyword arguments.
@@ -107,7 +82,7 @@ class TimeSeriesPlotter:
                 
                 # Set Plotly-specific defaults if the user didn't provide them
                 col_style.setdefault('mode', 'lines+markers')
-                col_style.setdefault('name', col) # Ensure the legend name matches the column
+                col_style.setdefault('name', col)  # Ensure the legend name matches the column
                 
                 # The ** operator unpacks the dictionary directly into the Scatter trace
                 fig.add_trace(go.Scatter(
@@ -122,7 +97,7 @@ class TimeSeriesPlotter:
             xaxis_title="Date",
             yaxis_title="Index Value",
             template="plotly_white",
-            hovermode="x unified" # Great for time series: shows all values for a given date
+            hovermode="x unified"  # Great for time series: shows all values for a given date
         )
         
         # 2. Update/Overwrite defaults with anything the user passed in **layout_kwargs
@@ -132,18 +107,3 @@ class TimeSeriesPlotter:
         fig.update_layout(**layout_config)
         
         fig.show()
-    # def plot_interactive(self, columns_to_plot, title="Time Series Analysis"):
-    #     """Plotly interactive plot.
-    #     columns_to_plot: List of column names to plot (e.g., ['NDVI', 'NDTI']),
-    #     title: Title of the plot
-    #     """
-    #     fig = go.Figure()
-        
-    #     for col in columns_to_plot:
-    #         if col in self.df.columns:
-    #             fig.add_trace(go.Scatter(x=self.df['date'], y=self.df[col], 
-    #                                      mode='lines+markers', name=col))
-                
-    #     fig.update_layout(title=title, xaxis_title="Date", yaxis_title="Index Value",
-    #                       template="plotly_white")
-    #     fig.show()
