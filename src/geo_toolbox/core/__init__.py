@@ -1,5 +1,6 @@
 """Core data extraction module."""
 
-from .eedata import GEETimeSeriesExtractor, Reducer
+from .eedata import LandsatTimeSeriesExtractor, Reducer, Sentinal2TimeSeriesExtractor
+from .filter import SpeckleFilter
 
-__all__ = ["GEETimeSeriesExtractor", "Reducer"]
+__all__ = ["LandsatTimeSeriesExtractor", "Reducer", "Sentinal2TimeSeriesExtractor", "SpeckleFilter"]

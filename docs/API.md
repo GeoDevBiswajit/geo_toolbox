@@ -2,7 +2,7 @@
 
 ## Core Module
 
-### `GEETimeSeriesExtractor`
+### `Sentinal2TimeSeriesExtractor`
 
 Main class for extracting time series data from Google Earth Engine.
 
@@ -30,7 +30,7 @@ Extract aggregated index values for a region of interest.
 
 **Example:**
 ```python
-extractor = GEETimeSeriesExtractor()
+extractor = Sentinal2TimeSeriesExtractor()
 df = extractor.extract(
     aoi=my_aoi_geometry,
     start_date='2025-10-01',

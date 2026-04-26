@@ -29,14 +29,14 @@ pip install geo-toolbox
 
 ```python
 import geopandas as gpd
-from geo_toolbox import GEETimeSeriesExtractor, TimeSeriesProcessor, TimeSeriesPlotter
+from geo_toolbox import Sentinal2TimeSeriesExtractor, TimeSeriesProcessor, TimeSeriesPlotter
 
 # Load your area of interest
 gdf = gpd.read_file('example_data/input/farm1.gpkg')
 aoi = geemap.gdf_to_ee(gdf).geometry()
 
 # Extract Sentinel-2 time series
-extractor = GEETimeSeriesExtractor()
+extractor = Sentinal2TimeSeriesExtractor()
 raw_df = extractor.extract(
     aoi=aoi,
     start_date='2025-10-01',
